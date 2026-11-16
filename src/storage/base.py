@@ -3,11 +3,11 @@ from abc import ABC, abstractmethod
 from src.models.board import Board
 
 
-class BaseStorage(ABC):
+class BoardRepository(ABC):
     @abstractmethod
-    def load_board(id: int) -> Board | None:
-        pass
+    def find_by_id(self, board_id: str) -> Board | None:
+        ...
 
     @abstractmethod
-    def save_board(board: Board) -> bool:
-        pass
+    def save(self, board: Board) -> None:
+        ...
