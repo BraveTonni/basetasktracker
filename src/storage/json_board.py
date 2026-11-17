@@ -24,7 +24,9 @@ class JsonStringBoardRepository(BoardRepository):
         data = json.loads(raw)
         board = Board(data["id"], data["name"])
         for col_data in data["columns"]:
-            column = Column(col_data["id"], col_data["name"], col_data["order"])
+            column = Column(
+                col_data["id"], col_data["name"], col_data["order"]
+            )
             for t in col_data["tasks"]:
                 assignee_data = t.get("assignee")
                 assignee = User(**assignee_data) if assignee_data else None
@@ -38,7 +40,7 @@ class JsonStringBoardRepository(BoardRepository):
                     )
                 )
             board._columns.append(column)
-            
+
         self._cache[board_id] = board
         return board
 
@@ -57,7 +59,9 @@ class JsonStringBoardRepository(BoardRepository):
                             "title": t.title,
                             "description": t.description,
                             "order": t.order,
-                            "assignee": vars(t.assignee) if t.assignee else None,
+                            "assignee": (
+                                vars(t.assignee) if t.assignee else None
+                            ),
                         }
                         for t in c.tasks
                     ],

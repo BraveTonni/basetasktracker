@@ -20,7 +20,11 @@ class Board:
 
     def move_task(self, task_id: UUID, new_column_id: int) -> None:
         source = next(
-            (c for c in self._columns if any(t.id == task_id for t in c.tasks)),
+            (
+                c
+                for c in self._columns
+                if any(t.id == task_id for t in c.tasks)
+            ),
             None,
         )
         if source is None:
@@ -30,7 +34,9 @@ class Board:
             (c for c in self._columns if c.id == new_column_id), None
         )
         if target is None:
-            raise ValueError(f"Column {new_column_id} not found on board {self.id}")
+            raise ValueError(
+                f"Column {new_column_id} not found on board {self.id}"
+            )
 
         task = next(t for t in source.tasks if t.id == task_id)
         source.remove_task(task_id)

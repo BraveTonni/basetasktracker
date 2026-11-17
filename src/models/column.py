@@ -13,8 +13,10 @@ class Column:
 
     def add_task(self, task: Task) -> None:
         if any(t.id == task.id for t in self.tasks):
-            raise ValueError(f"task {task.id} already exists in column {self.id}")
-        
+            raise ValueError(
+                f"task {task.id} already exists in column {self.id}"
+            )
+
         self.tasks.append(task)
 
     def remove_task(self, task_id: UUID) -> None:
