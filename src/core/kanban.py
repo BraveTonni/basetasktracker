@@ -41,6 +41,7 @@ class KanbanService:
         self._repository.save(board)
 
     def delete_task(self, board_id: str, task_id: UUID) -> None:
+        # TODO: make permission for task delete (to owner/admin)...
         board = self.get_board(board_id)
         board.delete_task(task_id)
         self._repository.save(board)
