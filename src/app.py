@@ -1,3 +1,4 @@
+from src.bus.base import EventPublisher
 from src.core.controller import KanbanController
 from src.core.kanban import KanbanService
 from src.models.board import Board
@@ -7,12 +8,16 @@ from src.storage.in_memory import InMemoryBoardRepository
 
 
 class Application:
-    def __init__(self, repository: BoardRepository | None = None):
+    def __init__(
+        self,
+        repository: BoardRepository | None = None,
+        events: EventPublisher | None = None,
+    ):
         if repository is None:
             repository = InMemoryBoardRepository()
 
         self._repository = repository
-        self._service = KanbanService(repository)
+        self._service = KanbanService(repository, events)
         self._controller = KanbanController(self._service)
 
     def create_board(
