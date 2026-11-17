@@ -1,9 +1,16 @@
+import os
+
 from src.app import Application
+from src.bus.http import HttpEventPublisher
 from src.storage.json_board import JsonStringBoardRepository
 
 
 def main():
-    app = Application()
+    events = None
+    if os.environ.get("EVENT_BUS_TOKEN"):
+        events = HttpEventPublisher.from_env()
+
+    app = Application(events=events)
     app.create_board(
         "board-1",
         "My Kanban",
